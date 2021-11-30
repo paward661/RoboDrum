@@ -6,7 +6,7 @@
  *  @date    2021-NOV-28 Original file
  */
 #include "sensor_tasks.h"
-#include "sensor.h"
+#include "sensor_driver.h"
 /** @brief   Task which records user input to the bass drum
  *  @details This task records the drum strokes on the bass drum and sends it to the bass_play_task()
  *  @param   p_params A pointer to function parameters which we don't use.
