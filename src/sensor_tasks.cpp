@@ -13,11 +13,17 @@
  */
 void bass_listen_task (void* p_params)
 {
-    bass_sensor = sensor()
     (void)p_params;            // Does nothing but shut up a compiler warning
+    sensor base_sensor(A0,300); // Creates a sensor object for the base
     for (;;)
     {
-        Serial << "u";
+        if (STATE == WAITING){
+            if (base_sensor.check()){
+                STATE = RECORD;
+            }
+        }else if (STATE == RECORD){
+            if ()
+        }
         // Delay the given number of RTOS ticks until beginning to run this
         // task loop again. The resulting timing is not accurate, as the time
         // it took to run the task adds to this interval and accumulates
