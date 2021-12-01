@@ -1,4 +1,4 @@
-/** @file sensor.h
+/** @file sensor_driver.h
  *  This file contains the sensor class that measure drum impacts
  * 
  *  @author  Patrick Ward
@@ -6,11 +6,6 @@
  */
 
 #include <Arduino.h>
-#include <PrintStream.h>
-#include "sensor.h"
-#if (defined STM32L4xx || defined STM32F4xx)
-    #include <STM32FreeRTOS.h>
-#endif
 
 /** @brief   Class which implements a pizo-electric sensor object
  * @details  Checks if the current digital value at the pin is above a certain threshold

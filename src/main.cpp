@@ -10,8 +10,19 @@
 #if (defined STM32L4xx || defined STM32F4xx)
     #include <STM32FreeRTOS.h>
 #endif
+#include "taskshare.h"         // Header for inter-task shared data
+#include "taskqueue.h"         // Header for inter-task data queues
+#include "shares.h"            // Header for shares used in this project
 #include "sensor_tasks.h"           // Header for tasks recording drum input
 #include "playback_tasks.h"         // Header for tasks playing the drums
+
+/// A share which holds boolean value for if the program should continue to record data
+Share<bool> listening ("Recording Times");
+/// A queue which holds a bunch of data taken by a measurement task
+Queue<uint32_t> strike_timeB (100, "Bass Strike Times");
+/// A queue which holds a bunch of data taken by a measurement task
+Queue<uint32_t> strike_timeS (100, "Bass Strike Times");
+
 
 /** @brief   Arduino setup function which runs once at program startup.
  *  @details This function sets up a serial port for communication and creates
@@ -24,31 +35,34 @@ void setup ()
     Serial.begin (115200);
     delay (2000);
     Serial << endl << endl << "Hello, I'm ready to jam" << endl;
+
+    listening.put(true);
+    
     // Create a task which records bass drum input
     xTaskCreate (bass_listen_task,
                  "BassLis",                       // Task name for printouts
                  4096,                            // Stack size: Not sure how big I should make this
                  NULL,                            // Parameters for task fn.
-                 5,                               // Priority: May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 3,                               // Priority: May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);                           // Task handle
     // Create a task which records snare drum input
     xTaskCreate (snare_listen_task,
                  "SnareLis",
-                 2048,                            // Not sure how big I should make this
+                 4096,                            // Not sure how big I should make this
                  NULL,
                  3,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // Create a task which plays the bass drum
     xTaskCreate (bass_play_task,
                  "BassPlay",
-                 2048,                            // Not sure how big I should make this
+                 4096,                            // Not sure how big I should make this
                  NULL,
                  5,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // Create a task which plays the snare drum
     xTaskCreate (snare_play_task,
-                 "BassPlay",
-                 2048,                            // Not sure how big I should make this
+                 "SnarePlay",
+                 4096,                            // Not sure how big I should make this
                  NULL,
                  5,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL)

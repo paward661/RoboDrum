@@ -5,6 +5,7 @@
  *  @author  Patrick Ward
  *  @date    2021-NOV-28 Original file
  */
+#include "shares.h"
 #include "sensor_tasks.h"
 #include "sensor_driver.h"
 /** @brief   Task which records user input to the bass drum
@@ -14,20 +15,39 @@
 void bass_listen_task (void* p_params)
 {
     (void)p_params;            // Does nothing but shut up a compiler warning
+
+    uint8_t STATE = 0;
+    uint8_t WAITING = 0;
+    uint8_t RECORD = 1;
+
     sensor base_sensor(A0,300); // Creates a sensor object for the base
+
+    bool ran = false;
+    uint32_t time = millis();
+    uint32_t last;
+
     for (;;)
     {
         if (STATE == WAITING){
-            if (base_sensor.check()){
-                STATE = RECORD;
+            if (!ran){
+                if (base_sensor.check()){
+                    STATE = RECORD;
+                    last = time;
+                    ran = true;
+                }
             }
         }else if (STATE == RECORD){
-            if ()
-        }
-        // Delay the given number of RTOS ticks until beginning to run this
-        // task loop again. The resulting timing is not accurate, as the time
-        // it took to run the task adds to this interval and accumulates
-        vTaskDelay (2500);
+            time = millis();
+            if (time-last <= 5000000){
+                if (base_sensor.check()){
+                    strike_timeB.put(time-last);
+                    last = time;
+                }
+            } else {
+                STATE = WAITING;
+                listening.put(false);
+            }
+        }else{}
     }
 }
 /** @brief   Task which records user input to the snare drum
@@ -37,10 +57,38 @@ void bass_listen_task (void* p_params)
 void snare_listen_task (void* p_params)
 {
     (void)p_params;            // Does nothing but shut up a compiler warning
+
+    uint8_t STATE = 0;
+    uint8_t WAITING = 0;
+    uint8_t RECORD = 1;
+
+    sensor snare_sensor(A1,300); // Creates a sensor object for the base
+    
+    bool ran = false;
+    uint32_t time = millis();
+    uint32_t last;
+
     for (;;)
     {
-        Serial << endl;
-        // Delay the given number of RTOS ticks to run about twice a minute
-        vTaskDelay (30000);
+        if (STATE == WAITING){
+            if (!ran){
+                if (snare_sensor.check()){
+                    STATE = RECORD;
+                    last = time;
+                    ran = true;
+                }
+            }
+        }else if (STATE == RECORD){
+            time = millis();
+            if (time-last <= 5000000 && listening.get()){
+                if (snare_sensor.check()){
+                    strike_timeS.put(time-last);
+                    last = time;
+                }
+            } else {
+                STATE = WAITING;
+                listening.put(false);
+            }
+        }else{}
     }
 }

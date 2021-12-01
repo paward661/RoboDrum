@@ -10,5 +10,6 @@
 #if (defined STM32L4xx || defined STM32F4xx)
     #include <STM32FreeRTOS.h>
 #endif
+#include "shares.h"
 void bass_listen_task (void* p_params);
 void snare_listen_task (void* p_params);
