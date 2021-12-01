@@ -39,7 +39,7 @@ void LilMotorStrike::lil_motor_strike(void)
   analogWrite(PWM_pin, 255);   //Moves CH A
   
   //strike time
-  vTaskDelay(200);
+  vTaskDelay(100);
   
   //go back
   digitalWrite(Dir_pin, HIGH);   //Sets direction of CH A
@@ -49,5 +49,5 @@ void LilMotorStrike::lil_motor_strike(void)
   vTaskDelay(40);    
   
   //stop
-  digitalWrite(9, HIGH); //Engage the Brake for Channel A
+  digitalWrite(brake_pin, HIGH); //Engage the Brake for Channel A
 }
