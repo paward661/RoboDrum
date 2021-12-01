@@ -38,7 +38,7 @@ void bass_listen_task (void* p_params)
             }
         }else if (STATE == RECORD){
             time = millis();
-            if (time-last <= 5000000){
+            if (time-last <= 5000 && listening.get()){
                 if (base_sensor.check()){
                     strike_timeB.put(time-last);
                     last = time;
@@ -80,7 +80,7 @@ void snare_listen_task (void* p_params)
             }
         }else if (STATE == RECORD){
             time = millis();
-            if (time-last <= 5000000 && listening.get()){
+            if (time-last <= 5000 && listening.get()){
                 if (snare_sensor.check()){
                     strike_timeS.put(time-last);
                     last = time;
