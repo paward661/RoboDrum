@@ -5,9 +5,7 @@
  *  @author  Patrick Ward
  *  @date    2021-NOV-28 Original file
  */
-#include "shares.h"
 #include "sensor_tasks.h"
-#include "sensor_driver.h"
 /** @brief   Task which records user input to the bass drum
  *  @details This task records the drum strokes on the bass drum and sends it to the bass_play_task()
  *  @param   p_params A pointer to function parameters which we don't use.
@@ -20,7 +18,7 @@ void bass_listen_task (void* p_params)
     uint8_t WAITING = 0;
     uint8_t RECORD = 1;
 
-    sensor base_sensor(A0,300); // Creates a sensor object for the base
+    sensor base_sensor(A5,300); // Creates a sensor object for the base
 
     bool ran = false;
     uint32_t time = millis();
@@ -28,6 +26,7 @@ void bass_listen_task (void* p_params)
 
     for (;;)
     {
+        vTaskDelay(100);
         if (STATE == WAITING){
             if (!ran){
                 if (base_sensor.check()){
@@ -62,32 +61,40 @@ void snare_listen_task (void* p_params)
     uint8_t WAITING = 0;
     uint8_t RECORD = 1;
 
-    sensor snare_sensor(A1,300); // Creates a sensor object for the base
+    sensor snare_sensor(A4,30); // Creates a sensor object for the base
+    Serial.println("At Snare Sensor Task");
     
     bool ran = false;
-    uint32_t time = millis();
+    uint32_t time;
     uint32_t last;
 
     for (;;)
     {
+        vTaskDelay(100);
         if (STATE == WAITING){
             if (!ran){
+                Serial.println(snare_sensor.get());
                 if (snare_sensor.check()){
                     STATE = RECORD;
+                    time = millis();
                     last = time;
                     ran = true;
+                    Serial.println("ouch");
+
                 }
             }
         }else if (STATE == RECORD){
             time = millis();
             if (time-last <= 5000 && listening.get()){
                 if (snare_sensor.check()){
+                    Serial.println(time-last);
                     strike_timeS.put(time-last);
                     last = time;
                 }
             } else {
                 STATE = WAITING;
                 listening.put(false);
+                Serial.println("escape");
             }
         }else{}
     }

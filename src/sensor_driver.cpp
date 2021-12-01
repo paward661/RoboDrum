@@ -18,6 +18,7 @@ sensor::sensor(uint8_t P1, uint16_t threshold)
     thresh = threshold;
     // Stores the Nucleo pin
     Pin = P1;
+    Serial.println("snare sense constructed");
 }
 
 /** @brief   Adds a data point to the stat tracking object

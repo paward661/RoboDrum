@@ -5,9 +5,11 @@
  *  @date    2021-NOV-29 Original file
  */
 #include <Arduino.h>
-#include "LilMo.h"
 #include <PrintStream.h>
-#include <iostream>
+#if (defined STM32L4xx || defined STM32F4xx)
+    #include <STM32FreeRTOS.h>
+#endif
+#include "LilMo.h"
 
 /** @brief   Constructor function.
  *  @details This task initializes the pinNumber variable to the appropriate pin value.

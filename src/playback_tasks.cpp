@@ -4,9 +4,6 @@
  *  @author  Sachin Gokhale
  *  @date    2021-NOV-30 Original file
  */
-#include "LilMo.h"
-#include "BigMo.h"
-#include "shares.h"
 #include "playback_tasks.h"
 
 
@@ -25,24 +22,26 @@ void bass_play_task (void* p_params)
   uint8_t PLAY = 1;
   BigMotorStrike bigMo(10);
   uint32_t val = 0;
-
-  if (STATE == WAITING)
+  for (;;)
   {
-    vTaskDelay(1000);
-    if (listening.get() == false)
+    if (STATE == WAITING)
     {
-      STATE = PLAY;
-      bigMo.big_motor_strike();
       vTaskDelay(1000);
+      if (listening.get() == false)
+      {
+        STATE = PLAY;
+        bigMo.big_motor_strike();
+        vTaskDelay(1000);
+      }
     }
+    else if (STATE == PLAY)
+    {
+      val = strike_timeB.get();
+      vTaskDelay(val);
+      bigMo.big_motor_strike();
+    }
+    else{}
   }
-  else if (STATE == PLAY)
-  {
-    val = strike_timeB.get();
-    vTaskDelay(val)
-    bigMo.big_motor_strike();
-  }
-  else{}
 }
 
 /** @brief   Task which plays back the user input to the snare drum
@@ -60,22 +59,25 @@ void snare_play_task (void* p_params)
   uint8_t PLAY = 1;
   LilMotorStrike lilMo(9,12,3);
   uint32_t val = 0;
-
-  if (STATE == WAITING)
+  for (;;)
   {
-    vTaskDelay(1000);
-    if (listening.get() == false)
+    if (STATE == WAITING)
     {
-      STATE = PLAY;
-      lilMo.lil_motor_strike();
-      vTaskDelay(1000);
+      vTaskDelay(2000);
+      Serial.println(listening.get());
+      if (listening.get() == false)
+      {
+        STATE = PLAY;
+        lilMo.lil_motor_strike();
+        vTaskDelay(1000);
+      }
     }
+    else if (STATE == PLAY)
+    {
+      val = strike_timeS.get();
+      vTaskDelay(val);
+      lilMo.lil_motor_strike();
+    }
+    else{}
   }
-  else if (STATE == PLAY)
-  {
-    val = strike_timeS.get();
-    vTaskDelay(val)
-    lilMo.lil_motor_strike();
-  }
-  else{}
 }

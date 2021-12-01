@@ -28,5 +28,5 @@ class sensor
     bool check (void);
     // Gets the current digital value at the pin
     uint16_t get (void);
-}
+};
 
