@@ -41,7 +41,7 @@ void LilMotorStrike::lil_motor_strike(void)
   analogWrite(PWM_pin, 255);   //Moves CH A
   
   //strike time
-  vTaskDelay(100);
+  vTaskDelay(80);
   
   //go back
   digitalWrite(Dir_pin, HIGH);   //Sets direction of CH A

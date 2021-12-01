@@ -18,10 +18,10 @@ void bass_listen_task (void* p_params)
     uint8_t WAITING = 0;
     uint8_t RECORD = 1;
 
-    sensor base_sensor(A5,300); // Creates a sensor object for the base
+    sensor base_sensor(A5,30); // Creates a sensor object for the base
 
     bool ran = false;
-    uint32_t time = millis();
+    uint32_t time;
     uint32_t last;
 
     for (;;)
@@ -29,8 +29,10 @@ void bass_listen_task (void* p_params)
         vTaskDelay(100);
         if (STATE == WAITING){
             if (!ran){
+                Serial.println(base_sensor.get());
                 if (base_sensor.check()){
                     STATE = RECORD;
+                    time = millis();
                     last = time;
                     ran = true;
                 }
@@ -39,6 +41,7 @@ void bass_listen_task (void* p_params)
             time = millis();
             if (time-last <= 5000 && listening.get()){
                 if (base_sensor.check()){
+                    Serial.println(time-last); //print time
                     strike_timeB.put(time-last);
                     last = time;
                 }

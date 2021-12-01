@@ -18,6 +18,8 @@
 BigMotorStrike::BigMotorStrike(uint8_t p1)
 {
   pinNumber = p1;
+  //establish power transistor gate
+  pinMode(pinNumber, OUTPUT); //transistor gate
 }
 
 /** @brief   Task which strikes the bigger drum.
