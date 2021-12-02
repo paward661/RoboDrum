@@ -38,33 +38,33 @@ void setup ()
 
     listening.put(true);
     
-    // // Create a task which records bass drum input
+    // Create a task which records bass drum input
     // xTaskCreate (bass_listen_task,
     //              "BassLis",                       // Task name for printouts
     //              4096,                            // Stack size: Not sure how big I should make this
     //              NULL,                            // Parameters for task fn.
-    //              3,                               // Priority: May need to revisit this (also not sure if we can have two tasks at the same priority)
+    //              5,     //was 3                          // Priority: May need to revisit this (also not sure if we can have two tasks at the same priority)
     //              NULL);                           // Task handle
     // Create a task which records snare drum input
     xTaskCreate (snare_listen_task,
                  "SnareLis",
                  4096,                            // Not sure how big I should make this
                  NULL,
-                 3,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 5,    //was 3                           // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // // Create a task which plays the bass drum
     // xTaskCreate (bass_play_task,
     //              "BassPlay",
     //              4096,                            // Not sure how big I should make this
     //              NULL,
-    //              5,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
+    //              3,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
     //              NULL);
     // Create a task which plays the snare drum
     xTaskCreate (snare_play_task,
                  "SnarePlay",
                  4096,                            // Not sure how big I should make this
                  NULL,
-                 5,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 3,  // was 5                             // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // If using an STM32, we need to call the scheduler startup function now;
     // if using an ESP32, it has already been called for us

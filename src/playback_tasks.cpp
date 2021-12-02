@@ -57,8 +57,10 @@ void snare_play_task (void* p_params)
   uint8_t STATE = 0;
   uint8_t WAITING = 0;
   uint8_t PLAY = 1;
-  LilMotorStrike lilMo(9,12,3);
+  LilMotorStrike lilMo1(9,12,3);
+  LilMotorStrike lilMo2(8,13,11);
   uint32_t val = 0;
+  bool a = true;
   for (;;)
   {
     if (STATE == WAITING)
@@ -68,15 +70,23 @@ void snare_play_task (void* p_params)
       if (listening.get() == false)
       {
         STATE = PLAY;
-        lilMo.lil_motor_strike();
+        //lilMo1.lil_motor_strike();
         vTaskDelay(1000);
       }
     }
     else if (STATE == PLAY)
     {
-      val = strike_timeS.get();
-      vTaskDelay(val);
-      lilMo.lil_motor_strike();
+      if (a){
+        lilMo2.lil_motor_strike();
+        a = false;
+        val = strike_timeS.get();
+        vTaskDelay(val);
+      }else{
+        lilMo1.lil_motor_strike();
+        a = true;
+        val = strike_timeS.get();
+        vTaskDelay(val);
+      }
     }
     else{}
   }
