@@ -48,7 +48,7 @@ void LilMotorStrike::lil_motor_strike(void)
   analogWrite(PWM_pin, 255);   //Moves CH A
   
   //recoil time
-  vTaskDelay(40);    
+  vTaskDelay(50);    
   
   //stop
   digitalWrite(brake_pin, HIGH); //Engage the Brake for Channel A
