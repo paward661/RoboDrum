@@ -15,4 +15,8 @@ extern Share<bool> listening;
 extern Queue<uint32_t> strike_timeB;
 /// A queue which holds a bunch of data taken by a measurement task
 extern Queue<uint32_t> strike_timeS;
+
+extern Share<uint8_t> first;
+
+extern Share<uint32_t> first_time;
 #endif // _SHARES_H_

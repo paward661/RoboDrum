@@ -18,7 +18,8 @@
 
 /// A share which holds boolean value for if the program should continue to record data
 Share<bool> listening ("Recording Times");
-
+Share<uint8_t> first ("which one");
+Share<uint32_t> first_time ("First Strike Time");
 /// A queue which holds a bunch of data taken by a measurement task
 Queue<uint32_t> strike_timeB (100, "Bass Strike Times");
 /// A queue which holds a bunch of data taken by a measurement task
@@ -38,6 +39,8 @@ void setup ()
     Serial << endl << endl << "Hello, I'm ready to jam" << endl;
 
     listening.put(true);
+    first.put(0);
+    first_time.put(0);
     
     // Create a task which records bass drum input
     xTaskCreate (bass_listen_task,

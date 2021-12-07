@@ -34,9 +34,15 @@ void bass_listen_task (void* p_params)
                     STATE = RECORD;
                     time = millis();
                     last = time;
+                    if (first.get() == 0){
+                        first.put(2);
+                        first_time.put(time);
+                    }else{
+                        strike_timeB.put(time - first_time.get());
+                    }
                     ran = true;
                     Serial.println("ouch on my bass");
-                    vTaskDelay(180);
+                    vTaskDelay(200);
                 }
             }else{
                 vTaskDelay(80000);
@@ -45,11 +51,11 @@ void bass_listen_task (void* p_params)
             time = millis();
             if (time-last <= 5000 && listening.get()){
                 if (base_sensor.check()){
-                    //Serial.println("basstime:");
-                    //Serial.println(time-last); //print time
-                    strike_timeB.put(time-last);
+                    Serial.println("basstime:");
+                    // Serial.println(time-last);
+                    strike_timeB.put(time-last); 
                     last = time;
-                    vTaskDelay(180);
+                    vTaskDelay(200);
                 }
             } else {
                 STATE = WAITING;
@@ -71,7 +77,7 @@ void snare_listen_task (void* p_params)
     uint8_t WAITING = 0;
     uint8_t RECORD = 1;
 
-    sensor snare_sensor(A4,80); // Creates a sensor object for the snare (Pin,Threshold)
+    sensor snare_sensor(A4,1000); // Creates a sensor object for the snare (Pin,Threshold)
     //Serial.println("At Snare Sensor Task");
     
     bool ran = false;
@@ -82,15 +88,21 @@ void snare_listen_task (void* p_params)
     {
         if (STATE == WAITING){
             if (!ran){
-                vTaskDelay(25);
-                Serial.println(snare_sensor.get());
+                vTaskDelay(100);
+                //Serial.println(snare_sensor.get());
                 if (snare_sensor.check()){
                     STATE = RECORD;
                     time = millis();
                     last = time;
+                    if (first.get() == 0){
+                        first.put(1);
+                        first_time.put(time);
+                    }else{
+                        strike_timeB.put(time - first_time.get());
+                    }
                     ran = true;
                     Serial.println("ouch on my snare");
-                    vTaskDelay(180);
+                    vTaskDelay(200);
                 }
             }else{
                 vTaskDelay(80000);
@@ -99,10 +111,10 @@ void snare_listen_task (void* p_params)
             time = millis();
             if (time-last <= 5000 && listening.get()){
                 if (snare_sensor.check()){
-                    Serial.println("snaretime:");
-                    Serial.println(time-last);
-                    Serial.println(snare_sensor.get());
-                    strike_timeS.put(time-last);
+                    strike_timeB.put(time-last); 
+                     Serial.println("snaretime:");
+                    // Serial.println(time-last);
+                    // Serial.println(snare_sensor.get());
                     last = time;
                     vTaskDelay(180);
                 }
