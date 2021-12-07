@@ -18,8 +18,7 @@
 
 /// A share which holds boolean value for if the program should continue to record data
 Share<bool> listening ("Recording Times");
-Share<uint8_t> first ("which one");
-Share<uint32_t> first_time ("First Strike Time");
+
 /// A queue which holds a bunch of data taken by a measurement task
 Queue<uint32_t> strike_timeB (100, "Bass Strike Times");
 /// A queue which holds a bunch of data taken by a measurement task
@@ -39,36 +38,34 @@ void setup ()
     Serial << endl << endl << "Hello, I'm ready to jam" << endl;
 
     listening.put(true);
-    first.put(0);
-    first_time.put(0);
     
     // Create a task which records bass drum input
     xTaskCreate (bass_listen_task,
                  "BassLis",                       // Task name for printouts
                  4096,                            // Stack size: Not sure how big I should make this
                  NULL,                            // Parameters for task fn.
-                 5,     //was 3                          // Priority: May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 3,     //was 5                          // Priority: May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);                           // Task handle
-    // // Create a task which records snare drum input
+    // Create a task which records snare drum input
     xTaskCreate (snare_listen_task,
                  "SnareLis",
                  4096,                            // Not sure how big I should make this
                  NULL,
-                 5,    //was 3                           // May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 3,    //was 5                           // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // Create a task which plays the bass drum
     xTaskCreate (bass_play_task,
                  "BassPlay",
                  4096,                            // Not sure how big I should make this
                  NULL,
-                 3,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 5,                               // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // Create a task which plays the snare drum
     xTaskCreate (snare_play_task,
                  "SnarePlay",
                  4096,                            // Not sure how big I should make this
                  NULL,
-                 3,  // was 5                             // May need to revisit this (also not sure if we can have two tasks at the same priority)
+                 5,  // was 3                             // May need to revisit this (also not sure if we can have two tasks at the same priority)
                  NULL);
     // If using an STM32, we need to call the scheduler startup function now;
     // if using an ESP32, it has already been called for us

@@ -37,23 +37,16 @@ void bass_play_task (void* p_params)
       if (listening.get() == false)
       {
         STATE = PLAY;
-        // bigMo.big_motor_strike();
+        //bigMo.big_motor_strike();
         vTaskDelay(1000);
       }
     }
     // This state plays all the drum strikes from the bass recording task
     else if (STATE == PLAY)
     {
-      if (first.get() == 2)
-      {
-        bigMo.big_motor_strike();
-        val = strike_timeB.get();
-        vTaskDelay(val);
-      }else{
-        val = strike_timeB.get();
-        vTaskDelay(val);
-        bigMo.big_motor_strike();
-      }
+      bigMo.big_motor_strike();
+      val = strike_timeB.get();
+      vTaskDelay(val);
     }
     else{}
   }
@@ -101,32 +94,17 @@ void snare_play_task (void* p_params)
     //This State plays 
     else if (STATE == PLAY)
     {
-      if (first.get() == 1)
-      {
-        if (a){
-          lilMo2.lil_motor_strike();
-          a = false;
-          val = strike_timeS.get();
-          vTaskDelay(val);
-        }else{
-          lilMo1.lil_motor_strike();
-          a = true;
-          val = strike_timeS.get();
-          vTaskDelay(val);
-        }
+      if (a){
+        lilMo2.lil_motor_strike();
+        a = false;
+        val = strike_timeS.get();
+        vTaskDelay(val);
       }else{
-        if (a){
-          lilMo2.lil_motor_strike();
-          a = false;
-          val = strike_timeS.get();
-          vTaskDelay(val);
-        }else{
-          lilMo1.lil_motor_strike();
-          a = true;
-          val = strike_timeS.get();
-          vTaskDelay(val);
-        }
-      }     
+        lilMo1.lil_motor_strike();
+        a = true;
+        val = strike_timeS.get();
+        vTaskDelay(val);
+      }
     }
     else{}
   }
