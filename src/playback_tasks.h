@@ -1,7 +1,7 @@
 /** @file playback_tasks.h
  *  This file contains tasks which time and play drum strokes.
  * 
- *  @author  Sachin Gokhale
+ *  @author  Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date    2021-NOV-30 Original file
  */
 
@@ -14,5 +14,7 @@
 #include "BigMo.h"
 #include "shares.h"
 
+// Bass playing task
 void bass_play_task(void* p_params);
+// Bass playing task
 void snare_play_task(void* p_params);

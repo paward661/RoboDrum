@@ -1,7 +1,7 @@
 /** @file LilMo.cpp
- *  This file contains a class which actuates the smaller drum motor to strike.
+ *  This file contains a motor driver class which actuates the smaller drum motor to strike.
  * 
- *  @author  Sachin Gokhale
+ *  @author  Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date    2021-NOV-29 Original file
  */
 #include <Arduino.h>
@@ -13,6 +13,9 @@
 
 /** @brief   Constructor function.
  *  @details This task initializes the pinNumber variable to the appropriate pin value.
+ *  @param   Brake is a uint8_t variable holding the value of a brake pin
+ *  @param   Dir is a uint8_t variable holding the value of a directional pin
+ *  @param   PWM is a uint8_t variable holding the value of a PWM pin
  */
 LilMotorStrike::LilMotorStrike(uint8_t Brake, uint8_t Dir, uint8_t PWM)
 {

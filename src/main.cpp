@@ -1,6 +1,8 @@
 /** @file main.cpp
  *    This file contains the programing necessary for an
- *    automatic drum set. 
+ *    automatic drum set.The intention of this program is 
+ *    to have a drum set play back the same beat that a user
+ *    strikes on the drums. 
  * 
  *  @author Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date   28 Nov 2021 Original file
@@ -36,7 +38,8 @@ void setup ()
     Serial.begin (115200);
     delay (2000);
     Serial << endl << endl << "Hello, I'm ready to jam" << endl;
-
+    
+    // Initialize the listening variable as true
     listening.put(true);
     
     // Create a task which records bass drum input

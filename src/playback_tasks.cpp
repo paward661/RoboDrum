@@ -1,7 +1,7 @@
 /** @file playback_tasks.cpp
  *  This file contains tasks which time and play drum strokes.
  * 
- *  @author  Sachin Gokhale
+ *  @author  Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date    2021-NOV-30 Original file
  */
 #include "playback_tasks.h"
@@ -91,7 +91,7 @@ void snare_play_task (void* p_params)
         vTaskDelay(1000);
       }
     }
-    //This State plays 
+    //This State plays using one snare motor at a time alternating back and forth
     else if (STATE == PLAY)
     {
       if (a){

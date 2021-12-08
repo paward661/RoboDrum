@@ -1,7 +1,7 @@
 /** @file sensor_driver.h
- *  This file contains the sensor class that measure drum impacts
+ *  This file contains the sensor class that measures drum impacts
  * 
- *  @author  Patrick Ward
+ *  @author  Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date    2021-NOV-29 Original file
  */
 

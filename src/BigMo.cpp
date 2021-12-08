@@ -1,7 +1,7 @@
 /** @file BigMo.cpp
- *  This file contains a class which actuates the larger drum motor to strike.
+ *  This file contains a motor driver class which actuates the larger drum motor to strike.
  * 
- *  @author  Sachin Gokhale
+ *  @author  Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date    2021-NOV-29 Original file
  */
 #include <Arduino.h>
@@ -14,11 +14,14 @@
 
 /** @brief   Constructor function.
  *  @details This task initializes the pinNumber variable to the appropriate pin value.
+ *  @param   p1 a uint8_t varaible that holds the arduino pin that provides the logical
+ *           signal to the transistor
  */
 BigMotorStrike::BigMotorStrike(uint8_t p1)
 {
+  // Holds the arduino pin that logically controls the transistor
   pinNumber = p1;
-  //establish power transistor gate
+  // establish power transistor gate
   pinMode(pinNumber, OUTPUT); //transistor gate
 }
 

@@ -1,7 +1,7 @@
 /** @file sensor_driver.cpp
- * This file contains the definition of a sensor class
+ * This file contains the definition of a sensor driver class
  * 
- * @author Patrick Ward
+ * @author Patrick Ward, Daniel Turn, and Sachin Gokhale
  * @date  2021-Nov-29
  */
 #include "sensor_driver.h"

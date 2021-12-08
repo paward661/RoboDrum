@@ -2,7 +2,7 @@
  *  This file contains extern declarations of shares and queues which are used
  *  in more than one file of the project.
  * 
- *  @author Patrick Ward
+ *  @author Patrick Ward, Daniel Turn, and Sachin Gokhale
  *  @date   2021-Nov-30 Original file 
  */
 #ifndef _SHARES_H_
