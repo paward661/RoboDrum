@@ -14,7 +14,7 @@
 class BigMotorStrike
 {
   protected:
-    // Holds microcontroller logic pin for the power transistor
+    /// Holds microcontroller logic pin for the power transistor
     uint8_t pinNumber;
     
   public:

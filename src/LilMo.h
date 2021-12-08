@@ -14,11 +14,11 @@ class LilMotorStrike
 
 {
   protected:
-    // Stores the brake pin for the motor driver chip
+    /// Stores the brake pin for the motor driver chip
     uint8_t brake_pin;
-    // Stores the direction pin for the motor driver chip
+    /// Stores the direction pin for the motor driver chip
     uint8_t Dir_pin;
-    // Stores the PWM pin for the motor driver chip
+    /// Stores the PWM pin for the motor driver chip
     uint8_t PWM_pin;
 
   public:

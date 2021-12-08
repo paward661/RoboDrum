@@ -16,9 +16,9 @@ class sensor
 
 {
     protected:
-        // Stores the digital value threshold for a strike
+        /// Stores the digital value threshold for a strike
         uint16_t thresh;
-        // Stores the Nucleo pin
+        /// Stores the Nucleo pin
         uint8_t Pin;
 
     public:
